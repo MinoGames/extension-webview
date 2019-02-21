@@ -42,7 +42,7 @@ namespace webviewex {
 	void destroy();
 	void onUrlChanging(NSString *);
     
-	void init(value _onDestroyedCallback, value _onURLChangingCallback, bool withPopup, bool wait) {
+	void init(value _onDestroyedCallback, value _onURLChangingCallback, bool withPopup) {
 		if(instance != nil) destroy();
 		
 		onDestroyedCallback = new AutoGCRoot(_onDestroyedCallback);
@@ -68,23 +68,7 @@ namespace webviewex {
         
         instance = [[UIWebView alloc] initWithFrame:CGRectMake(padding, padding + screen.size.height, screen.size.width - (padding * 2), screen.size.height - (padding * 2))];
 		
-        if (wait) {
-            webViewDelegate.onFinishLoading = ^{
-                // Transition from bottom to top
-                [UIView animateWithDuration: 0.3
-                    delay: 0.0
-                    options: UIViewAnimationOptionCurveEaseOut
-                    animations:^{
-                        instance.frame = CGRectMake(padding, padding, screen.size.width - (padding * 2), screen.size.height - (padding * 2));
-                    } 
-                    completion:^(BOOL finished){
-                }];
-            };
-        } else {
-            webViewDelegate.onFinishLoading = ^{
-
-            };
-            
+        webViewDelegate.onFinishLoading = ^{
             // Transition from bottom to top
             [UIView animateWithDuration: 0.3
                 delay: 0.0
@@ -94,7 +78,7 @@ namespace webviewex {
                 } 
                 completion:^(BOOL finished){
             }];
-        }
+        };
         
         instance.delegate = webViewDelegate;
 		instance.scalesPageToFit=YES;

@@ -37,11 +37,10 @@ class WebView  {
 		?urlWhitelist :Array<String>,
 		?urlBlacklist :Array<String>,
 		?useWideViewPort :Bool = false,						// Android only
-		?mediaPlaybackRequiresUserGesture :Bool = true,		// Android only
-		?wait :Bool = false
+		?mediaPlaybackRequiresUserGesture :Bool = true		// Android only
 	) :Void {
 		if (onClose != null) return;
-
+		
 		init();
 		if(urlWhitelist!=null) urlWhitelist.push(url);
 		
@@ -67,7 +66,7 @@ class WebView  {
 			_open(Json.stringify(obj));
 		#elseif ios
 			if (listener == null) listener = new WebViewListener(urlWhitelist, urlBlacklist);
-			APICall("init", [listener, floating, wait]);
+			APICall("init", [listener, floating]);
 			navigate(url);
 		#end
 	}
@@ -146,7 +145,7 @@ class WebView  {
             if (method == "navigate") APINavigate(args[0]);
             if (method == "destroy") APIDestroy();
 			#elseif ios
-			if (method == "init") APIInit(args[0].onClose, args[0].onURLChanging, args[1], args[2]);
+			if (method == "init") APIInit(args[0].onClose, args[0].onURLChanging, args[1]);
             if (method == "navigate") APINavigate(args[0]);
             if (method == "loadHtml") APILoadHtml(args[0]);
             if (method == "destroy") APIDestroy();
