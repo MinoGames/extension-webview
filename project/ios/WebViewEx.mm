@@ -64,12 +64,23 @@ namespace webviewex {
         }
         
         padding /= 4;
-        if(!withPopup) padding = 0;
+        /*if(!withPopup)*/ padding = 0;
         
         instance = [[UIWebView alloc] initWithFrame:CGRectMake(padding, padding + screen.size.height, screen.size.width - (padding * 2), screen.size.height - (padding * 2))];
 		
-        webViewDelegate.onFinishLoading = ^{
-            // Transition from bottom to top
+        if (withPopup) {
+            webViewDelegate.onFinishLoading = ^{
+                // Transition from bottom to top
+                [UIView animateWithDuration: 0.3
+                    delay: 0.0
+                    options: UIViewAnimationOptionCurveEaseOut
+                    animations:^{
+                        instance.frame = CGRectMake(padding, padding, screen.size.width - (padding * 2), screen.size.height - (padding * 2));
+                    } 
+                    completion:^(BOOL finished){
+                }];
+            };
+        } else {
             [UIView animateWithDuration: 0.3
                 delay: 0.0
                 options: UIViewAnimationOptionCurveEaseOut
@@ -78,7 +89,12 @@ namespace webviewex {
                 } 
                 completion:^(BOOL finished){
             }];
-        };
+
+            webViewDelegate.onFinishLoading = ^{
+                NSLog(@"WebView loaded!");
+            };
+        }
+        
         
         instance.delegate = webViewDelegate;
 		instance.scalesPageToFit=YES;
