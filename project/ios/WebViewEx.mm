@@ -171,7 +171,7 @@ namespace webviewex {
                 if(closeButton != nil) {
                     [closeButton removeFromSuperview];
                 }
-                //[localInstance release];
+                [localInstance release];
             }
         }];
         instance=nil;
