@@ -171,7 +171,7 @@ namespace webviewex {
                 if(closeButton != nil) {
                     [closeButton removeFromSuperview];
                 }
-                //[localInstance release];
+                //[localInstance release]; // This is disabled in iOS 12 (automatic reference counting)
             }
         }];
         instance=nil;
