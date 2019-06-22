@@ -1,7 +1,8 @@
 package extension.webview;
 
 import haxe.Json;
-	
+
+@:keep
 class WebView  {
 
 	private static var initialized :Bool = false;

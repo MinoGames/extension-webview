@@ -1,5 +1,6 @@
 package extension.webview;
 
+@:keep
 class AndroidCallbackHelper {
 
 	public function new() {
