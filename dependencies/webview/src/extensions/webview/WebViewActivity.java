@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
 
 public class WebViewActivity extends Activity {
@@ -184,9 +185,13 @@ public class WebViewActivity extends Activity {
 			);
 
 			// Load the page
-			callback.call("onURLChanging", new Object[] {url});
-			if(url=="about:blank" && html!="null") webView.loadData(html, "text/html", null);
-			else webView.loadUrl(url);
+			Extension.mainActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					callback.call("onURLChanging", new Object[] {url});
+					if(url=="about:blank" && html!="null") webView.loadData(html, "text/html", null);
+					else webView.loadUrl(url);
+				}
+			});
 		}
 
 		// Attach the WebView to its placeholder
@@ -245,11 +250,15 @@ public class WebViewActivity extends Activity {
 	@Override
 	public void finish(){
 		super.finish();
+
 		WebViewExtension.active=false;
-		webView.clearHistory();
-		webView.loadUrl("about:blank");
-		webViewPlaceholder.removeView(webView);
+		Extension.mainActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				webView.clearHistory();
+				webView.loadUrl("about:blank");
+				webViewPlaceholder.removeView(webView);
+			}
+		});
 	}
-	
 	
 }

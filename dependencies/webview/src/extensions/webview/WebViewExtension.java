@@ -62,6 +62,10 @@ public class WebViewExtension extends Extension {
 
 		} catch (JSONException e) {
 			Log.d("JSONException", e.toString());
+		} catch (Exception e) {
+						
+		} catch (Throwable t) {
+
 		}
 
 	}
@@ -88,6 +92,10 @@ public class WebViewExtension extends Extension {
 
 		} catch (JSONException e) {
 			Log.d("JSONException", e.toString());
+		} catch (Exception e) {
+						
+		} catch (Throwable t) {
+
 		}
 
 	}
