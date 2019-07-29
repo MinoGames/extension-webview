@@ -59,7 +59,11 @@ public class WebViewActivity extends Activity {
 		}
 		
 		// Initialize the UI
-		initUI();
+		Extension.mainActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				initUI();
+			}
+		});
 	}
 
 	protected void initUI()
