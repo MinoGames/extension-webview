@@ -189,7 +189,9 @@ public class WebViewActivity extends Activity {
 				public void run() {
 					callback.call("onURLChanging", new Object[] {url});
 					if(url=="about:blank" && html!="null") webView.loadData(html, "text/html", null);
-					else webView.loadUrl(url);
+					else {
+						webView.loadUrl(url);
+					}
 				}
 			});
 		}
